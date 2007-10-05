@@ -6,7 +6,7 @@
 // use 'Ant' to access a global instance of AntBuilder
 //
 // For example you can create directory under project tree:
-// Ant.mkdir(dir:"C:\othersvn\grails-liquibase/liquibase/grails-app/jobs")
+// Ant.mkdir(dir:"C:\othersvn\liquibase\grails/liquibase/grails-app/jobs")
 //
 
 Ant.property(environment:"env")
