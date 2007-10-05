@@ -1,0 +1,6 @@
+<plugin name='liquibase' version='0.1'>
+  <author>Nathan Voxland</author>
+  <authorEmail>nathan@voxland.net</authorEmail>
+  <title>LiquiBase support for Grails</title>
+  <resources />
+</plugin>
