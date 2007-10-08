@@ -6,7 +6,7 @@ grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
 task ('default':'''Writes SQL to roll back the specified number of changes to STDOUT.
-Example: grails rollbackCount 3
+Example: grails rollback-count-sql 3
 ''') {
     depends(setup)
 

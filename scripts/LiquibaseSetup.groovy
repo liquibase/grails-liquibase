@@ -11,6 +11,7 @@ config = new ConfigObject()
 
 migrator = null
 migratorClass = null;
+connection = null;
 
 task ('setup' : "Migrates the current database to the latest") {
     profile("compiling config") {
@@ -85,7 +86,7 @@ task ('setup' : "Migrates the current database to the latest") {
             info.put("password", p.password);
         }
 
-        Connection connection = driver.connect(p.url, info);
+        connection = driver.connect(p.url, info);
         if (connection == null) {
             throw new RuntimeException("Connection could not be created to " + p.url + " with driver " + driver.getClass().getName() + ".  Possibly the wrong driver for the given database URL");
         }

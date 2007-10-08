@@ -1,11 +1,32 @@
 
 class LiquibaseGrailsPlugin {
-	def version = 0.91
+	def version = '1.3.2.0'
 	def dependsOn = [dataSource:version]
 
 	def author = "Nathan Voxland"
     	def authorEmail = "nathan@voxland.net"
-    	def title = "LiquiBase support for Grails"
+    	def title = "LiquiBase for Grails"
+    	def description = '''\
+Integrates LiquiBase into Grails.  LiquiBase is a database change tracking tool similar to ActiveRecord:Migration.
+Major functionality includes:
+- 34 Refactorings
+- Extensibility to create custom refactorings
+- update database to current version
+- rollback last X changes to database
+- rollback database changes to particular date/time
+- rollback database to "tag"
+- Stand-alone IDE and Eclipse plug-in
+- "Contexts" for including/excluding change sets to execute
+- Database diff report
+- Database diff changelog generation
+- Ability to create changelog to generate an existing database
+- Database change documentation generation
+- Ability to save SQL to be applied for approval by a DBA
+- DBMS Check, user check, and SQL check preconditions
+- Can split change log into multiple files for easier management
+- Support for 10 database systems
+'''
+    def documentation = 'http://www.liquibase.org/manual/latest/grails.html'
 	
 	def doWithSpring = {
 		// TODO Implement runtime spring config (optional)

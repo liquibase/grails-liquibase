@@ -5,7 +5,7 @@ Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task ('default':'''Drops all objects in database.
+task ('default':'''Drops all objects in database owned by the connected user.
 Example: grails dropAll
 ''') {
     depends(setup)

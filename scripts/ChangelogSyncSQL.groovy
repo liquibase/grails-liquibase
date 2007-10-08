@@ -1,15 +1,17 @@
 import org.codehaus.groovy.grails.compiler.support.*
 import java.io.OutputStreamWriter;
+import java.util.*;
+import java.text.*;
 
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task ('default':"Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
+task ('default':'''Writes SQL to mark all changes as executed in the database to STDOUT''') {
     depends(setup)
 
     try {
-        migrator.futureRollbackSQL(new OutputStreamWriter(System.out))
+        migrator.changelogSyncSQL(new OutputStreamWriter(System.out))        
     }
     catch (Exception e) {
         e.printStackTrace()

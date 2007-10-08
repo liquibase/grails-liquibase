@@ -5,7 +5,7 @@ Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task ('default':"Outputs SQL to update database.") {
+task ('default':"Writes SQL to update database to current version to STDOUT.") {
     depends(setup)
 
     try {

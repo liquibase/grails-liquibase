@@ -7,14 +7,15 @@ Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task ('default':'''Rolls back the specified date.
-Example: grails rollback-to-date 2007-05-15 18:15:12 
-''') {
+task ('default':'''Writes Change Log XML to copy the current state of the database to standard out''') {
     depends(setup)
 
     try {
-        def DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        migrator.rollbackToDate(dateFormat.parse(args));
+        def diff = classLoader.loadClass("liquibase.diff.Diff").getConstructor(java.sql.Connection.class).newInstance(connection);
+//        diff.addStatusListener(new OutDiffStatusListener());
+        def diffResult = diff.compare();
+
+        diffResult.printChangeLog(System.out, migrator.getDatabase(), classLoader.loadClass("org.liquibase.grails.GrailsXmlWriter").getConstructor().newInstance());
     }
     catch (Exception e) {
         e.printStackTrace()
@@ -22,5 +23,5 @@ Example: grails rollback-to-date 2007-05-15 18:15:12
         exit(1)
     } finally {
         migrator.getDatabase().getConnection().close();
-    }                                                         
+    }
 }
