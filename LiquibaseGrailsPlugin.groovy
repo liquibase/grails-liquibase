@@ -5,7 +5,7 @@ class LiquibaseGrailsPlugin {
 
 	def author = "Nathan Voxland"
     	def authorEmail = "nathan@voxland.net"
-    	def title = "LiquiBase for Grails"
+    	def title = "LiquiBase Database Refactoring for Grails"
     	def description = '''\
 Integrates LiquiBase into Grails.  LiquiBase is a database change tracking tool similar to ActiveRecord:Migration.
 Major functionality includes:
@@ -26,7 +26,7 @@ Major functionality includes:
 - Can split change log into multiple files for easier management
 - Support for 10 database systems
 '''
-    def documentation = 'http://www.liquibase.org/manual/latest/grails.html'
+    def documentation = 'http://www.liquibase.org/manual/grails'
 	
 	def doWithSpring = {
 		// TODO Implement runtime spring config (optional)

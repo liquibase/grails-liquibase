@@ -21,7 +21,7 @@ Major functionality includes:
 - Can split change log into multiple files for easier management
 - Support for 10 database systems
 </description>
-  <documentation>http://www.liquibase.org/manual/latest/grails.html</documentation>
+  <documentation>http://www.liquibase.org/manual/grails</documentation>
   <resources>
     <resource>DataSource</resource>
   </resources>
