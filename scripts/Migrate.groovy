@@ -9,7 +9,7 @@ task ('default':"Updates a database to the current version.") {
 
     try {
         System.out.println("Migrating ${grailsEnv} database");
-        migrator.migrate()
+        migrator.update()
     }
     catch (Exception e) {
         e.printStackTrace()

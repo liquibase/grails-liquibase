@@ -11,7 +11,7 @@ task ('default':'''Writes SQL to mark all changes as executed in the database to
     depends(setup)
 
     try {
-        migrator.changelogSyncSQL(new OutputStreamWriter(System.out))        
+        migrator.changeLogSync(new OutputStreamWriter(System.out))
     }
     catch (Exception e) {
         e.printStackTrace()
