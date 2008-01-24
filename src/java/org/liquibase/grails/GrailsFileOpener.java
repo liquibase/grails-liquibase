@@ -15,4 +15,8 @@ public class GrailsFileOpener implements FileOpener {
     public Enumeration<URL> getResources(String packageName) throws IOException {
         return getClass().getClassLoader().getResources("grails-app/migrations/"+packageName);
     }
+
+    public ClassLoader toClassLoader() {
+        return getClass().getClassLoader();
+    }
 }
