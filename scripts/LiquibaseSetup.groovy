@@ -93,7 +93,7 @@ task ('setup' : "Migrates the current database to the latest") {
 
         try {
             def fileOpener = classLoader.loadClass("org.liquibase.grails.GrailsFileOpener").getConstructor().newInstance()
-            migratorClass = classLoader.loadClass("liquibase.migrator.Migrator")
+            migratorClass = classLoader.loadClass("liquibase.Liquibase")
             migrator = migratorClass.getConstructor(String.class, classLoader.loadClass("liquibase.FileOpener")).newInstance("changelog.xml", fileOpener);
         } catch (Exception e){
             e.printStackTrace();
