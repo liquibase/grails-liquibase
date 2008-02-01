@@ -1,21 +1,16 @@
-import org.codehaus.groovy.grails.compiler.support.*
-import java.io.OutputStreamWriter;
-
-Ant.property(environment: "env")
-grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task ('default':"Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
+task('default': "Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
     depends(setup)
 
     try {
-        migrator.futureRollbackSQL(new OutputStreamWriter(System.out))
+        liquibase.futureRollbackSQL(null, new PrintWriter(System.out))
     }
     catch (Exception e) {
         e.printStackTrace()
         event("StatusFinal", ["Failed to migrate database ${grailsEnv}"])
         exit(1)
     } finally {
-        migrator.getDatabase().getConnection().close();
+        liquibase.getDatabase().getConnection().close();
     }
 }

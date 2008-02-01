@@ -1,12 +1,11 @@
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task('default': '''Rolls back the specified number of changes.
-Example: grails rollback-count 3
-''') {
+task('default': "Applies the specified number of changes to a database.") {
     depends(setup)
 
     try {
-        liquibase.rollback(Integer.parseInt(args), null);
+        System.out.println("Migrating ${grailsEnv} database");
+        liquibase.update(Integer.parseInt(args), null);
     }
     catch (Exception e) {
         e.printStackTrace()

@@ -1,10 +1,10 @@
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
-task('default': '''Writes SQL to mark all changes as executed in the database to STDOUT''') {
+task('default': '''Mark all changes as executed in the database''') {
     depends(setup)
 
     try {
-        liquibase.changeLogSync(null, new PrintWriter(System.out))
+        liquibase.changeLogSync(null)
     }
     catch (Exception e) {
         e.printStackTrace()

@@ -1,6 +1,6 @@
-import org.codehaus.groovy.grails.compiler.support.*
-import java.sql.*;
-import liquibase.exception.*;
+import java.sql.Driver
+import liquibase.Liquibase
+import liquibase.database.DatabaseFactory;
 
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
@@ -9,11 +9,10 @@ includeTargets << new File("${grailsHome}/scripts/Compile.groovy")
 
 config = new ConfigObject()
 
-migrator = null
-migratorClass = null;
+liquibase = null
 connection = null;
 
-task ('setup' : "Migrates the current database to the latest") {
+task('setup': "Migrates the current database to the latest") {
     profile("compiling config") {
         compile()
     }
@@ -29,7 +28,7 @@ task ('setup' : "Migrates the current database to the latest") {
                 config = configSlurper.parse(classLoader.loadClass("Config"))
                 config.setConfigFile(configFile.toURL())
 
-//                ConfigurationHolder.setConfig(config)
+                //                ConfigurationHolder.setConfig(config)
             }
             catch (Exception e) {
                 e.printStackTrace()
@@ -44,7 +43,7 @@ task ('setup' : "Migrates the current database to the latest") {
             try {
                 def dataSourceConfig = configSlurper.parse(classLoader.loadClass("DataSource"))
                 config.merge(dataSourceConfig)
-//                ConfigurationHolder.setConfig(config)
+                //                ConfigurationHolder.setConfig(config)
             }
             catch (Exception e) {
                 e.printStackTrace()
@@ -93,12 +92,11 @@ task ('setup' : "Migrates the current database to the latest") {
 
         try {
             def fileOpener = classLoader.loadClass("org.liquibase.grails.GrailsFileOpener").getConstructor().newInstance()
-            migratorClass = classLoader.loadClass("liquibase.Liquibase")
-            migrator = migratorClass.getConstructor(String.class, classLoader.loadClass("liquibase.FileOpener")).newInstance("changelog.xml", fileOpener);
-        } catch (Exception e){
+//            migratorClass = classLoader.loadClass("liquibase.Liquibase")
+            liquibase = new Liquibase("changelog.xml", fileOpener, DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        migrator.init(connection)
     }
 }
 
