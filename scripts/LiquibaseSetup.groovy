@@ -1,6 +1,6 @@
 import java.sql.Driver
 import liquibase.Liquibase
-import liquibase.database.DatabaseFactory;
+import liquibase.database.DatabaseFactory
 
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"

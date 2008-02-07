@@ -1,10 +1,13 @@
+import liquibase.diff.Diff
+import liquibase.database.DatabaseFactory
+
 includeTargets << new File("scripts/LiquibaseSetup.groovy")
 
 task('default': '''Writes Change Log XML to copy the current state of the database to standard out''') {
     depends(setup)
 
     try {
-        def diff = classLoader.loadClass("liquibase.diff.Diff").getConstructor(java.sql.Connection.class).newInstance(connection);
+        def diff = new Diff(DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection), null);
         //        diff.addStatusListener(new OutDiffStatusListener());
         def diffResult = diff.compare();
 
