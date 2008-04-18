@@ -5,7 +5,9 @@ import liquibase.database.DatabaseFactory
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 
-includeTargets << new File("${grailsHome}/scripts/Compile.groovy")
+includeTargets << new File ( "${grailsHome}/scripts/Init.groovy" )
+includeTargets << new File ( "${grailsHome}/scripts/Package.groovy" )
+includeTargets << new File ( "${grailsHome}/scripts/Bootstrap.groovy" )
 
 config = new ConfigObject()
 
@@ -13,91 +15,104 @@ liquibase = null
 connection = null;
 
 task('setup': "Migrates the current database to the latest") {
-    profile("compiling config") {
-        compile()
-    }
+    depends(parseArguments, classpath, checkVersion, configureProxy)
 
-    profile("creating config object") {
-        ClassLoader contextLoader = Thread.currentThread().getContextClassLoader()
-        classLoader = new URLClassLoader([classesDir.toURL()] as URL[], contextLoader)
-        def configSlurper = new ConfigSlurper(grailsEnv)
-        def configFile = new File("${basedir}/grails-app/conf/Config.groovy")
-        if (configFile.exists()) {
-            try {
-
-                config = configSlurper.parse(classLoader.loadClass("Config"))
-                config.setConfigFile(configFile.toURL())
-
-                //                ConfigurationHolder.setConfig(config)
-            }
-            catch (Exception e) {
-                e.printStackTrace()
-
-                event("StatusFinal", ["Failed to compile configuration file ${configFile}: ${e.message}"])
-                exit(1)
-            }
-
-        }
-        def dataSourceFile = new File("${basedir}/grails-app/conf/DataSource.groovy")
-        if (dataSourceFile.exists()) {
-            try {
-                def dataSourceConfig = configSlurper.parse(classLoader.loadClass("DataSource"))
-                config.merge(dataSourceConfig)
-                //                ConfigurationHolder.setConfig(config)
-            }
-            catch (Exception e) {
-                e.printStackTrace()
-
-                event("StatusFinal", ["Failed to compile data source file $dataSourceFile: ${e.message}"])
-                exit(1)
-            }
-        }
-        classLoader = contextLoader;
-    }
+    rootLoader.addURL(new File("${classesDirPath}").toURL())
+    packageApp()
+    loadApp()
 
     profile("automigrate the current database") {
-        Properties p = config.dataSource.toProperties();
-        p.driver = p.driverClassName;
-        p.user = p.username;
-        if (p.password == null) {
-            p.password = ""
-        }
-        p.packageName = "grails-app.migrations"
-        p.auto = "true";
+        Properties p = config.toProperties()
+        def driverClassName = config.dataSource.driverClassName
+        def username = prepareString(p, config.dataSource.username, null)
+        def password = prepareString(p, config.dataSource.password, null)
+        def url = prepareString(p, config.dataSource.url, null)
 
         Driver driver;
         try {
             if (p.driver == null) {
-                p.driver = DatabaseFactory.getInstance().findDefaultDriver(p.url);
+                p.driver = DatabaseFactory.getInstance().findDefaultDriver(url)
             }
-
             if (p.driver == null) {
-                throw new RuntimeException("Driver class was not specified and could not be determined from the url");
+                throw new RuntimeException("Driver class was not specified and could not be determined from the url")
             }
-
-            driver = (Driver) Class.forName(p.driver, true, classLoader).newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot get database driver: " + e.getMessage());
+            driver = (Driver) Class.forName(driverClassName, true, classLoader).newInstance()
         }
-        Properties info = new Properties();
-        info.put("user", p.username);
-        if (p.password != null) {
-            info.put("password", p.password);
+        catch (Exception e) {
+            throw new RuntimeException("Cannot get database driver: " + e.getMessage())
         }
-
-        connection = driver.connect(p.url, info);
-        if (connection == null) {
-            throw new RuntimeException("Connection could not be created to " + p.url + " with driver " + driver.getClass().getName() + ".  Possibly the wrong driver for the given database URL");
+        Properties info = new Properties()
+        info.put("user", username)
+        if (password != null) {
+            info.put("password", password);
         }
 
         try {
+            println "Connecting to database with URL: ${url}"
+            connection = driver.connect(url, info);
+            if (connection == null) {
+                throw new RuntimeException("Connection could not be created to ${url} with driver ${driverClassName}.  Possibly the wrong driver for the given database URL");
+            }
             def fileOpener = classLoader.loadClass("org.liquibase.grails.GrailsFileOpener").getConstructor().newInstance()
-//            migratorClass = classLoader.loadClass("liquibase.Liquibase")
             liquibase = new Liquibase("changelog.xml", fileOpener, DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
+DEFAULT_PLACEHOLDER_PREFIX = '${'
+DEFAULT_PLACEHOLDER_SUFFIX = '}'
+
+def prepareString(Properties props, String strVal, String originalPlaceholder)
+{
+    int startIndex = strVal.indexOf(DEFAULT_PLACEHOLDER_PREFIX);
+    while (startIndex != -1)
+    {
+        int endIndex = strVal.indexOf(DEFAULT_PLACEHOLDER_SUFFIX, startIndex + DEFAULT_PLACEHOLDER_PREFIX.length());
+        if (endIndex != -1)
+        {
+            String placeholder = strVal.substring(startIndex + DEFAULT_PLACEHOLDER_PREFIX.length(), endIndex);
+            String originalPlaceholderToUse = null;
+
+            if (originalPlaceholder != null)
+            {
+                originalPlaceholderToUse = originalPlaceholder;
+                if (placeholder.equals(originalPlaceholder))
+                {
+                    throw new RuntimeException("Circular placeholder reference '" + placeholder +"' in property definitions [" + props + "]");
+                }
+            }
+            else
+            {
+                originalPlaceholderToUse = placeholder;
+            }
+
+            // get the property directly, and fall back to System properties as required
+            String propVal = props.getProperty(placeholder);
+            if (propVal == null)
+                propVal = System.getProperty(placeholder);
+
+            if (propVal != null)
+            {
+                propVal = prepareString(props, propVal, originalPlaceholderToUse);
+                strVal = strVal.substring(0, startIndex) + propVal + strVal.substring(endIndex + 1);
+                startIndex = strVal.indexOf(DEFAULT_PLACEHOLDER_PREFIX, startIndex + propVal.length());
+            }
+            else
+            {
+                // return unprocessed value
+                return strVal;
+            }
+        }
+        else
+        {
+            startIndex = -1;
+        }
+    }
+    return strVal;
+}
+
 
 

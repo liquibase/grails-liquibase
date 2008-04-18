@@ -1,4 +1,4 @@
-includeTargets << new File("scripts/LiquibaseSetup.groovy")
+includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task('default': '''Mark all changes as executed in the database''') {
     depends(setup)

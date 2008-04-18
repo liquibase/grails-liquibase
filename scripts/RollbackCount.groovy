@@ -1,4 +1,4 @@
-includeTargets << new File("scripts/LiquibaseSetup.groovy")
+includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task('default': '''Rolls back the specified number of changes.
 Example: grails rollback-count 3

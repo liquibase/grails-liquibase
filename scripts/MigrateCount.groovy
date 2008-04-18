@@ -1,4 +1,4 @@
-includeTargets << new File("scripts/LiquibaseSetup.groovy")
+includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task('default': "Applies the specified number of changes to a database.") {
     depends(setup)

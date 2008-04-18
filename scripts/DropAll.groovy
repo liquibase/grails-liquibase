@@ -1,4 +1,4 @@
-includeTargets << new File("scripts/LiquibaseSetup.groovy")
+includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task('default': '''Drops all objects in database owned by the connected user.
 Example: grails dropAll

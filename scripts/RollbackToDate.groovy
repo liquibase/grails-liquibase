@@ -1,7 +1,7 @@
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
-includeTargets << new File("scripts/LiquibaseSetup.groovy")
+includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task('default': '''Rolls back the specified date.
 Example: grails rollback-to-date 2007-05-15 18:15:12 
