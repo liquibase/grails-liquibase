@@ -1,4 +1,4 @@
-<plugin name='liquibase' version='1.5.2.0'>
+<plugin name='liquibase' version='1.6.1.0'>
   <author>Nathan Voxland</author>
   <authorEmail>nathan@voxland.net</authorEmail>
   <title>LiquiBase Database Refactoring for Grails</title>
@@ -24,5 +24,6 @@ Major functionality includes:
   <documentation>http://www.liquibase.org/manual/grails</documentation>
   <resources>
     <resource>DataSource</resource>
+    <resource>UrlMappings</resource>
   </resources>
 </plugin>
