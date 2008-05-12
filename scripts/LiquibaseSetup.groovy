@@ -15,7 +15,7 @@ liquibase = null
 connection = null;
 
 task('setup': "Migrates the current database to the latest") {
-    depends(parseArguments, classpath, checkVersion, configureProxy)
+    depends(classpath, checkVersion, configureProxy)
 
     rootLoader.addURL(new File("${classesDirPath}").toURL())
     packageApp()
