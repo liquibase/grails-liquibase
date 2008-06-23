@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Rolls back the specified number of changes.
+target(rollbackCount: '''Rolls back the specified number of changes.
 Example: grails rollback-count 3
 ''') {
     depends(setup)
@@ -16,3 +16,5 @@ Example: grails rollback-count 3
         liquibase.getDatabase().close();
     }
 }
+
+setDefaultTarget("rollbackCount")

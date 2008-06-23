@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Rolls back the to a specific tag.
+target(rollback: '''Rolls back the to a specific tag.
 Example: grails rollback aTag
 ''') {
     depends(setup)
@@ -16,3 +16,5 @@ Example: grails rollback aTag
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("rollback")

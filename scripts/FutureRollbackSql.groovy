@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': "Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
+target(futureRollbackSql: "Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
     depends(setup)
 
     try {
@@ -15,3 +15,5 @@ task('default': "Writes SQL to roll back the database to the current state after
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("futureRollbackSql")

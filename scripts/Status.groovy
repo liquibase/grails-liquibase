@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Outputs list of unrun changesets''') {
+target(status: '''Outputs list of unrun changesets''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Outputs list of unrun changesets''') {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("status")

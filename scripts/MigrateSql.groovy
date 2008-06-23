@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': "Writes SQL to update database to current version to STDOUT.") {
+target(migrateSql: "Writes SQL to update database to current version to STDOUT.") {
     depends(setup)
 
     try {
@@ -15,3 +15,5 @@ task('default': "Writes SQL to update database to current version to STDOUT.") {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("migrateSql")

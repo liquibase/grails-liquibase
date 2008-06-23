@@ -14,7 +14,7 @@ config = new ConfigObject()
 liquibase = null
 connection = null;
 
-task('setup': "Migrates the current database to the latest") {
+target('setup': "Migrates the current database to the latest") {
     depends(classpath, checkVersion, configureProxy)
 
     rootLoader.addURL(new File("${classesDirPath}").toURL())
@@ -113,6 +113,7 @@ def prepareString(Properties props, String strVal, String originalPlaceholder)
     }
     return strVal;
 }
+
 
 
 

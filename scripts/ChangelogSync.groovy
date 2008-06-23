@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Mark all changes as executed in the database''') {
+target(changelogSync: '''Mark all changes as executed in the database''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Mark all changes as executed in the database''') {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("changelogSync")

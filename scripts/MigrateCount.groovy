@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': "Applies the specified number of changes to a database.") {
+target(migrateCount: "Applies the specified number of changes to a database.") {
     depends(setup)
 
     try {
@@ -15,3 +15,5 @@ task('default': "Applies the specified number of changes to a database.") {
         liquibase.getDatabase().close();
     }
 }
+
+setDefaultTarget("migrateCount")

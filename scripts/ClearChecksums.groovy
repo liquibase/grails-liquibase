@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Removes all saved checksums from database log. Useful for MD5Sum Check Failed errors''') {
+target(clearChecksums: '''Removes all saved checksums from database log. Useful for MD5Sum Check Failed errors''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Removes all saved checksums from database log. Useful for MD5
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("clearChecksums")

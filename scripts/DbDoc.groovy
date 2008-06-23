@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Generates Javadoc-like documentation based on current database and change log''') {
+target(dbDoc: '''Generates Javadoc-like documentation based on current database and change log''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Generates Javadoc-like documentation based on current databas
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("dbDoc")

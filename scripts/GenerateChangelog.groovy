@@ -3,7 +3,7 @@ import liquibase.database.DatabaseFactory
 
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Writes Change Log XML to copy the current state of the database to standard out''') {
+target(generateChangelog: '''Writes Change Log XML to copy the current state of the database to standard out''') {
     depends(setup)
 
     try {
@@ -25,3 +25,5 @@ task('default': '''Writes Change Log XML to copy the current state of the databa
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("generateChangelog")

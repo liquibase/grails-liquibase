@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': "Updates a database to the current version.") {
+target(migrate: "Updates a database to the current version.") {
     depends(setup)
 
     try {
@@ -15,3 +15,5 @@ task('default': "Updates a database to the current version.") {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("migrate")

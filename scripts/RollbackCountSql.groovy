@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Writes SQL to roll back the specified number of changes to STDOUT.
+target(rollbackCountSql: '''Writes SQL to roll back the specified number of changes to STDOUT.
 Example: grails rollback-count-sql 3
 ''') {
     depends(setup)
@@ -17,3 +17,5 @@ Example: grails rollback-count-sql 3
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("rollbackCountSql")

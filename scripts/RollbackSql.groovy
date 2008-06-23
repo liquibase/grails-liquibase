@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Writes SQL to roll back the database to that state it was in at when the tag was applied to STDOUT.
+target(rollbackSql: '''Writes SQL to roll back the database to that state it was in at when the tag was applied to STDOUT.
 Example: grails rollback-sql aTag
 ''') {
     depends(setup)
@@ -17,3 +17,5 @@ Example: grails rollback-sql aTag
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("rollbackSql")

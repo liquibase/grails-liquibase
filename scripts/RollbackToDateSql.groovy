@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat
 
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Writes SQL to roll back the database to that state it was in at the given date/time version to STDOUT.
+target(rollbackToDateSql: '''Writes SQL to roll back the database to that state it was in at the given date/time version to STDOUT.
 Example: grails rollback-to-date-sql 2007-05-15 18:15:12
 ''') {
     depends(setup)
@@ -21,3 +21,5 @@ Example: grails rollback-to-date-sql 2007-05-15 18:15:12
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("rollbackToDateSql")

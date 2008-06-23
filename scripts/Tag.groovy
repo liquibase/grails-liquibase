@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Tags the current database state for future rollback.
+target(tag: '''Tags the current database state for future rollback.
 Example: grails tag aTag
 ''') {
     depends(setup)
@@ -19,3 +19,5 @@ Example: grails tag aTag
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("tag")

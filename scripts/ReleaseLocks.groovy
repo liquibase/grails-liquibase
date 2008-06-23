@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Releases all locks on the database changelog''') {
+target(releaseLocks: '''Releases all locks on the database changelog''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Releases all locks on the database changelog''') {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("releaseLocks")

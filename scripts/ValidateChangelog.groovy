@@ -1,6 +1,6 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
-task('default': '''Checks changelog for errors''') {
+target(validateChangelog: '''Checks changelog for errors''') {
     depends(setup)
 
     try {
@@ -14,3 +14,5 @@ task('default': '''Checks changelog for errors''') {
         liquibase.getDatabase().getConnection().close();
     }
 }
+
+setDefaultTarget("validateChangelog")
