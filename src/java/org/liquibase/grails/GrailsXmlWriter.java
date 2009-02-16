@@ -2,8 +2,8 @@ package org.liquibase.grails;
 
 import liquibase.xml.XmlWriter;
 import org.w3c.dom.Document;
-import org.apache.xml.serialize.XMLSerializer;
-import org.apache.xml.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 
 import java.io.OutputStream;
 import java.io.IOException;

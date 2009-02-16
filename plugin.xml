@@ -24,5 +24,9 @@ Major functionality includes:
   <documentation>http://www.liquibase.org/manual/grails</documentation>
   <resources>
     <resource>DataSource</resource>
+    <resource>UrlMappings</resource>
   </resources>
+  <dependencies>
+    <plugin name='dataSource' version='* &gt; 1.0' />
+  </dependencies>
 </plugin>
