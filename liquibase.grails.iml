@@ -42,6 +42,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="liquibase" />
+    <orderEntry type="library" name="grails-1.0.4" level="application" />
   </component>
 </module>
 
