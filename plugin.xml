@@ -1,4 +1,4 @@
-<plugin name='liquibase' version='1.9.2.0'>
+<plugin name='liquibase' version='1.9.3.0'>
   <author>Nathan Voxland</author>
   <authorEmail>nathan@voxland.net</authorEmail>
   <title>LiquiBase Database Refactoring for Grails</title>
