@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(migrateSql: "Writes SQL to update database to current version to STDOUT.") {
-    depends(setup)
+    setup()
 
     try {
         def outStream = (args) ? new PrintStream(args) : System.out

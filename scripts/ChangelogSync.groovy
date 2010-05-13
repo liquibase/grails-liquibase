@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(changelogSync: '''Mark all changes as executed in the database''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.changeLogSync(null)

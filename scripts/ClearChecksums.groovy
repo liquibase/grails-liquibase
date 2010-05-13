@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(clearChecksums: '''Removes all saved checksums from database log. Useful for MD5Sum Check Failed errors''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.clearCheckSums()

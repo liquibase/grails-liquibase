@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(migrate: "Updates a database to the current version.") {
-    depends(setup)
+    setup()
 
     try {
         System.out.println("Migrating ${grailsEnv} database");

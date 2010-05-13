@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(releaseLocks: '''Releases all locks on the database changelog''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.forceReleaseLocks()

@@ -3,7 +3,7 @@ includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy"
 target(rollback: '''Rolls back the to a specific tag.
 Example: grails rollback aTag
 ''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.rollback(args, null);

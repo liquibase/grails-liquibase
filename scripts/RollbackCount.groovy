@@ -3,7 +3,7 @@ includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy"
 target(rollbackCount: '''Rolls back the specified number of changes.
 Example: grails rollback-count 3
 ''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.rollback(Integer.parseInt(args), null);

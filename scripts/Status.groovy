@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(status: '''Outputs list of unrun changesets''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.reportStatus(true, null, new OutputStreamWriter(System.out))

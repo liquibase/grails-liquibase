@@ -3,7 +3,7 @@ includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy"
 target(rollbackSql: '''Writes SQL to roll back the database to that state it was in at when the tag was applied to STDOUT.
 Example: grails rollback-sql aTag
 ''') {
-    depends(setup)
+    setup()
 
     try {
         def outStream = (args) ? new PrintStream(args) : System.out

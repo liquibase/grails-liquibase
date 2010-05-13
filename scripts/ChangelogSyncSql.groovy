@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(changelogSyncSql: '''Writes SQL to mark all changes as executed in the database to STDOUT''') {
-    depends(setup)
+    setup()
 
     try {
         def outStream = (args) ? new PrintStream(args) : System.out

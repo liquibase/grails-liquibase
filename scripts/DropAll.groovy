@@ -3,7 +3,7 @@ includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy"
 target(dropAll: '''Drops all objects in database owned by the connected user.
 Example: grails dropAll
 ''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.dropAll();

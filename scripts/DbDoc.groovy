@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(dbDoc: '''Generates Javadoc-like documentation based on current database and change log''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.generateDocumentation("dbdoc")

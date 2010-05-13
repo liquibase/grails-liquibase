@@ -4,7 +4,7 @@ import liquibase.database.DatabaseFactory
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(generateChangelog: '''Writes Change Log XML to copy the current state of the database to standard out''') {
-    depends(setup)
+    setup()
 
     try {
         def outStream = System.out

@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(futureRollbackSql: "Writes SQL to roll back the database to the current state after the changes in the changeslog have been applied.") {
-    depends(setup)
+    setup()
 
     try {
         def outStream = (args) ? new PrintStream(args) : System.out

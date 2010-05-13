@@ -1,6 +1,6 @@
-<plugin name='liquibase' version='1.9.3.0'>
+<plugin name='liquibase' version='1.9.3.1' grailsVersion='1.2.2 &gt; *'>
   <author>Nathan Voxland</author>
-  <authorEmail>nathan@voxland.net</authorEmail>
+  <authorEmail>nathan@voxland.net</authorEmail> 
   <title>LiquiBase Database Refactoring for Grails</title>
   <description>Integrates LiquiBase into Grails.  LiquiBase is a database change tracking tool similar to ActiveRecord:Migration.
 Major functionality includes:
@@ -25,4 +25,11 @@ Major functionality includes:
   <resources>
     <resource>DataSource</resource>
   </resources>
+  <dependencies>
+    <plugin name='dataSource' version='* &gt; 1.0' />
+    <resolvers>
+      <resolver type='grailsPlugins' name='grailsPlugins' />
+    </resolvers>
+  </dependencies>
+  <behavior />
 </plugin>

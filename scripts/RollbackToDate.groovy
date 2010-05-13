@@ -6,7 +6,7 @@ includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy"
 target(rollbackToDate: '''Rolls back the specified date.
 Example: grails rollback-to-date 2007-05-15 18:15:12 
 ''') {
-    depends(setup)
+    setup()
 
     try {
         def DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

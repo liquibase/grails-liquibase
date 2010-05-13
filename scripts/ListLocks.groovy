@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 task ('default':'''Lists who currently has locks on the database changelog''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.reportLocks(System.out)

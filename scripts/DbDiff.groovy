@@ -8,7 +8,7 @@ import liquibase.database.Database
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target('dbDiff': '''Generates change log required to make Test DB match Development''') {
-    depends(setup)
+    setup()
 
     try {
         def baseDatabase = getDatabase(config)

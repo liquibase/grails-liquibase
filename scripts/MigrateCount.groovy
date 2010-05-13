@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(migrateCount: "Applies the specified number of changes to a database.") {
-    depends(setup)
+    setup()
 
     try {
         System.out.println("Migrating ${grailsEnv} database");

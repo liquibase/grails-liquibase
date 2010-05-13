@@ -1,7 +1,7 @@
 includeTargets << new File("${liquibasePluginDir}/scripts/LiquibaseSetup.groovy")
 
 target(validateChangelog: '''Checks changelog for errors''') {
-    depends(setup)
+    setup()
 
     try {
         liquibase.validate()
