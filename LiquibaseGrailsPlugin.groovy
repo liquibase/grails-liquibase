@@ -1,6 +1,6 @@
 
 class LiquibaseGrailsPlugin {
-	def version = '1.9.3.2'
+	def version = '1.9.3.3'
 	def dependsOn = [dataSource:"* > 1.0"]
 	def grailsVersion = '1.0 > *'
 

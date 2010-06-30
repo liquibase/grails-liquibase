@@ -15,10 +15,9 @@ liquibase = null
 connection = null;
 
 target('setup': "Migrates the current database to the latest") {
-    depends(classpath, checkVersion, configureProxy)
+    depends(configureProxy, packageApp, classpath)
 
     rootLoader.addURL(new File("${classesDirPath}").toURL())
-    packageApp()
     loadApp()
 
     profile("automigrate the current database") {
@@ -113,7 +112,3 @@ def prepareString(Properties props, String strVal, String originalPlaceholder)
     }
     return strVal;
 }
-
-
-
-
