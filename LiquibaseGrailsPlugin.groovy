@@ -1,7 +1,8 @@
 
 class LiquibaseGrailsPlugin {
-	def version = '1.9.3.1'
+	def version = '1.9.3.2'
 	def dependsOn = [dataSource:"* > 1.0"]
+	def grailsVersion = '1.0 > *'
 
 	def author = "Nathan Voxland"
     	def authorEmail = "nathan@voxland.net"
