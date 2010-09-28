@@ -12,7 +12,8 @@ target('dbDiff': '''Generates change log required to make Test DB match Developm
 
     try {
         def baseDatabase = getDatabase(config)
-        ConfigObject testConfig = loadTestConfig(classLoader, servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome)
+        def myClassLoader = new GroovyClassLoader(getClass().getClassLoader())
+        ConfigObject testConfig = loadTestConfig(myClassLoader, servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome)
         def targetDatabase = getDatabase(testConfig)
 
         Diff diff = new Diff(baseDatabase, targetDatabase);
