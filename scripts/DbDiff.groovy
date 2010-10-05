@@ -12,8 +12,7 @@ target('dbDiff': '''Generates change log required to make Test DB match Developm
 
     try {
         def baseDatabase = getDatabase(config)
-        def myClassLoader = new GroovyClassLoader(getClass().getClassLoader())
-        ConfigObject testConfig = loadTestConfig(myClassLoader, servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome)
+        ConfigObject testConfig = loadTestConfig(servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome)
         def targetDatabase = getDatabase(testConfig)
 
         Diff diff = new Diff(baseDatabase, targetDatabase);
@@ -29,10 +28,10 @@ target('dbDiff': '''Generates change log required to make Test DB match Developm
     }
 }
 
-private ConfigObject loadTestConfig(classLoader, servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome) {
+private ConfigObject loadTestConfig(servletVersion, basedir, userHome, grailsAppVersion, grailsAppName, grailsHome) {
     def testConfigSlurper = new ConfigSlurper('test')
     testConfigSlurper.setBinding(grailsHome: grailsHome, appName: grailsAppName, appVersion: grailsAppVersion, userHome: userHome, basedir: basedir, servletVersion: servletVersion)
-    def testConfig = testConfigSlurper.parse(classLoader.loadClass("DataSource"))
+    def testConfig = testConfigSlurper.parse(Class.forName("DataSource"))
     return testConfig
 }
 
