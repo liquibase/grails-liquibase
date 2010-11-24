@@ -17,7 +17,6 @@ connection = null;
 target('setup': "Migrates the current database to the latest") {
     depends(configureProxy, packageApp, classpath)
 
-    rootLoader.addURL(new File("${classesDirPath}").toURL())
     loadApp()
 
     profile("automigrate the current database") {
